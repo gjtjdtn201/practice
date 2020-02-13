@@ -1,2 +1,9 @@
-a = sum(map(int, '1234'))
+c = [1,2,3]
+a = set(c)
+b = set(c)
+
+a = a - b
+
+if a == set():
+    print('hi')
 print(a)
