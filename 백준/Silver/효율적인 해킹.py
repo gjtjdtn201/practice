@@ -22,7 +22,6 @@ tree = [[] for i in range(N+1)]
 for i in range(M):
     a, b = map(int, input().split())
     tree[b].append(a)
-
 chk = -1
 ans = []
 
