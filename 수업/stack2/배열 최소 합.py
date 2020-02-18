@@ -2,11 +2,12 @@ import sys
 sys.stdin = open("배열 최소 합.txt", "r")
 
 def permutation(n, k, asum):
-    if result:
-        if asum > min(result):
-            return
+    global ans
+    if asum > ans:
+        return
     if k == n:
-        result.append(asum)
+        if asum < ans:
+            ans = asum
     else:
         for i in range(k, n):
             arr[k], arr[i] = arr[i], arr[k]
@@ -20,8 +21,8 @@ for test_case in range(1, T+1):
     matrix = []
     for i in range(N):
         matrix.append(list(map(int, input().split())))
-    result = []
+    ans = 9999
     arr = list(range(N))
     permutation(N, 0, 0)
 
-    print('#{} {}'.format(test_case, min(result)))
+    print('#{} {}'.format(test_case, ans))
