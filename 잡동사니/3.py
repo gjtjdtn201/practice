@@ -1,6 +1,3 @@
-import sys
-sys.stdin = open('파이프 옮기기1.txt', 'r')
-
 def SP(x, y, shape):
     global cnt
     if x == N-1 and y == N-1:
@@ -29,13 +26,12 @@ def SP(x, y, shape):
         if x + 1 < N and y + 1 < N and matrix[x][y + 1] == 0 and matrix[x + 1][y] == 0 and matrix[x + 1][y + 1] == 0:
             SP(x + 1, y + 1, 3)
 
+
 N = int(input())
-
 matrix = []
-
 for i in range(N):
     matrix.append(list(map(int, input().split())))
-cnt = 0
-SP(0, 1, 0)
 
+cnt = 0
+SP(0, 1, 1)
 print(cnt)
