@@ -16,14 +16,14 @@ def DQ(st, ed):
     if st == ed:
         return st
     mid = (st+ed) // 2
-    g1 = DQ(st,mid)
-    g2 = DQ(mid+1,ed)
-    return excute(g1,g2)
+    g1 = DQ(st, mid)
+    g2 = DQ(mid+1, ed)
+    return excute(g1, g2)
 
 T = int(input())
 
-for test_case in range(1,T+1):
+for test_case in range(1, T+1):
     N = int(input())
     ml = list(input().split())
-    ans = DQ(1,N)
+    ans = DQ(1, N)
     print('#{} {}'.format(test_case, ans))
