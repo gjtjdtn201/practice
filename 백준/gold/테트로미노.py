@@ -46,4 +46,20 @@ for y in range(N-2):
             if cnt > ans:
                 ans = cnt
 
+for y in range(N-1):
+    for x in range(M-2):
+        cnt = cnt1 = 0
+        cnt = matrix[y][x] + matrix[y][x + 1] + matrix[y+1][x+1] + matrix[y+1][x+2]
+        cnt1 = matrix[y][x+1] + matrix[y][x + 2] + matrix[y + 1][x] + matrix[y + 1][x + 1]
+        if max(cnt, cnt1) > ans:
+            ans = max(cnt, cnt1)
+
+for y in range(N-2):
+    for x in range(M-1):
+        cnt = cnt1 = 0
+        cnt = matrix[y][x] + matrix[y+1][x] + matrix[y+1][x+1] + matrix[y+2][x+1]
+        cnt1 = matrix[y][x+1] + matrix[y + 1][x+1] + matrix[y + 1][x] + matrix[y + 2][x]
+        if max(cnt, cnt1) > ans:
+            ans = max(cnt, cnt1)
+
 print(ans)
