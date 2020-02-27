@@ -13,7 +13,6 @@ for test_case in range(1, T+1):
         for j in range(A,B+1):
             ryu[j] += 1
 
-
     P = int(input())
     ans = ''
     for i in range(P):
