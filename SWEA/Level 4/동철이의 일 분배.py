@@ -1,3 +1,6 @@
+import sys
+sys.stdin = open('동철이의 일 분배.txt', 'r')
+
 def per(n, k, asum):
     global ans
     if n == k:
@@ -9,13 +12,10 @@ def per(n, k, asum):
                 per(n, k + 1, asum * P[k][arr[k]]*0.01)
             arr[k], arr[i] = arr[i], arr[k]
 
-T = int(input())
-
-for tc in range(1, T+1):
+for tc in range(1, int(input())+1):
     N = int(input())
     P = [list(map(int, input().split())) for _ in range(N)]
     ans = 0
     arr = list(range(N))
     per(N, 0, 100)
-    round(ans, 7)
     print('#{} {:.6f}'.format(tc, ans))
