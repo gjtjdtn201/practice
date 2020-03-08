@@ -1,5 +1,5 @@
 import sys
-sys.stdin = open('격자판에 숫자 이어붙이기.txt', 'r')
+sys.stdin = open('격자판에 숫자 이어 붙이기.txt', 'r')
 
 def ad(n, al, a, b):
     if n == 7:
