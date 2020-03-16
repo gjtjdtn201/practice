@@ -10,21 +10,18 @@ for tc in range(1, int(input())+1):
         b = M - a.count('B')
         r = M - a.count('R')
         color.append((w, b, r))
-    ans = 9999999999
+    ans = N * M
+    # i는 흰색과 파란색의 구분
     for i in range(1, N-1):
-        for j in range(1, i+1):
-            res = 0
-            bc = j
-            rc = N-1-i
-            wc = i-bc
-            wc += 1
-            rc += 1
-            for k in range(wc):
-                res += color[k][0]
-            for k in range(wc, wc + bc):
-                res += color[k][1]
-            for k in range(wc + bc, N):
-                res += color[k][2]
-            ans = min(ans, res)
+        # j는 파란색과 빨간색의 구분
+        for j in range(i, N-1):
+            cnt = 0
+            for k in range(i):
+                cnt += color[k][0]
+            for k in range(i,j+1):
+                cnt += color[k][1]
+            for k in range(j+1, N):
+                cnt += color[k][2]
+            ans = min(cnt, ans)
 
     print('#{} {}'.format(tc, ans))
