@@ -11,46 +11,45 @@ def chk(c_matrix):
             else:
                 cnt0 = 1
             chk1 = c_matrix[y][x]
-            if cnt0 == K:
+            if cnt0 >= K:
                 break
-            elif K-cnt0 > D-1-y:
+            elif K - cnt0 > D - 1 - y:
                 return False
         else:
             return False
     return True
 
 def IJ(n, k, idx):
-    global res
-    if res == 1:
-        return
-    if n == k:
+    global ans
+    if n <= k and n < ans:
         if chk(matrix):
-            res = 1
-        return
+            ans = n
+            return
     elif K-n > D-1 - idx:
         return
-    for i in range(idx, D):
-        a = matrix[i][:]
-        matrix[i] = [0]*W
-        IJ(n + 1, k, idx + 1)
-        matrix[i] = [1]*W
-        IJ(n + 1, k, idx + 1)
-        matrix[i] = a
+    if n < k:
+        for i in range(idx, D):
+            if not visit[i]:
+                a = matrix[i]
+                visit[i] = True
+                matrix[i] = [0]*W
+                IJ(n + 1, k, i + 1)
+                matrix[i] = [1]*W
+                IJ(n + 1, k, i + 1)
+                matrix[i] = a
+                visit[i] = False
+    return
 
 for tc in range(1, int(input())+1):
     D, W, K = map(int, input().split())
     matrix = [list(map(int, input().split())) for _ in range(D)]
-    ans = 1
-    res = 0
+    visit = [False] * D
+    ans = K
     if K == 1:
         ans = 0
     elif chk(matrix):
         ans = 0
     else:
-        while ans < K:
-            IJ(0, ans, 0)
-            if res == 1:
-                break
-            ans += 1
+        IJ(0, K-1, 0)
 
     print('#{} {}'.format(tc, ans))
