@@ -1,0 +1,21 @@
+n, x, y = map(int, input().split())
+
+def power2(k): # 두배 만드는 함수
+    return 1 << k
+
+def go(n, x, y):
+    if n == 1:
+        return 2*x+y
+    else:
+        if x < power2(n-1): # 점점 쪼개진다.
+            if y < power2(n-1):# 점점 쪼개진다.
+                return go(n-1, x, y)
+            else:
+                return go(n-1, x, y-power2(n-1)) + power2(2*n-2)
+        else:
+            if y < power2(n-1):
+                return go(n-1, x-power2(n-1), y) + power2(2*n-2)*2
+            else:
+                return go(n-1, x-power2(n-1), y-power2(n-1)) + power2(2*n-2)*3;
+
+print(go(n,x,y))
