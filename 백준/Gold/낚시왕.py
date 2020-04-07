@@ -17,6 +17,9 @@ else:
 
     cnt = 0
     for i in range(C):
+        for zz in matrix:
+            print(zz)
+        print()
         for w in range(R):
             if matrix[w][i] != 0:
                 cnt += matrix[w][i][2]
