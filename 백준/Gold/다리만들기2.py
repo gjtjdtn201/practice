@@ -2,13 +2,14 @@ import sys
 sys.stdin = open('다리만들기2.txt')
 
 from collections import deque
+import sys
+input = sys.stdin.readline
 
 def bridge():
     for y in range(N):
         for x in range(M-3):
             if matrix[y][x] != 0 and matrix[y][x+1] == 0:
                 nx = x+1
-                # cnt2 = 다리의 갯수
                 cnt2 = 0
                 while nx < M:
                     if matrix[y][nx] == 0:
@@ -46,6 +47,11 @@ def bridge():
                                 island[b][a] = cnt2
                         break
 
+def find_set(x):
+    if x != p[x]:
+        p[x] = find_set(p[x])
+    return p[x]
+
 N, M = map(int, input().split())
 
 matrix = [list(map(int, input().split())) for _ in range(N)]
@@ -70,30 +76,27 @@ for y in range(N):
 
 K = cnt-1
 island = [[0]*K for _ in range(K)]
-
 bridge()
+stack = []
+for y in range(K):
+    for x in range(y+1, K):
+        if island[y][x] != 0:
+            stack.append((island[y][x], y, x))
 
-for i in island:
-    print(i)
+stack.sort()
 
-ans = -1
-chk = [0]*K
-for i in range(K):
-    for j in range(i+1, K):
-        if island[i][j] == 0:
-            continue
-        if chk[j] == 0 or chk[i] == 0:
-            chk[i] = island[i][j]
-            chk[j] = island[i][j]
-        elif chk[j] > island[i][j] or chk[i] > island[i][j]:
-            chk[i] = island[i][j]
-            chk[j] = island[i][j]
+#부모를 자기 자신으로 설정
+p = [x for x in range(K+1)]
+ans = cnt = 0
+group = K  # 섬의 수
+for w, u, v in stack:
+    a = find_set(u)
+    b = find_set(v)
+    if a != b:  # dis-joint set
+        p[b] = a  # union
+        ans, cnt, group = ans + w, cnt + 1, group - 1
+        if cnt == K - 1:
+            break
 
-print(chk)
-
-if chk.count(0) == 0:
-    ans = sum(chk)
-
-print(ans)
-
-
+#tree 간선의 수는 정점-1
+print(ans if group == 1 else -1)
