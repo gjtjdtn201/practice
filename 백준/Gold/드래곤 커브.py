@@ -1,6 +1,7 @@
 import sys
 sys.stdin = open('드래곤 커브.txt', 'r')
 
+# 0=오른쪽, 1=위쪽, 2=왼쪽, 3=아래쪽
 dy = [0, -1, 0, 1]
 dx = [1, 0, -1, 0]
 
@@ -17,11 +18,13 @@ N = int(input())
 matrix = [[0]*101 for _ in range(101)]
 for __ in range(N):
     x, y, d, g = map(int, input().split())
+    # 시작점 체크
     matrix[y][x] = 1
     y += dy[d]
     x += dx[d]
     matrix[y][x] = 1
     stack = [d]
+    # 세대 만큼 그리기
     for i in range(g):
         curve()
 ans = 0
