@@ -5,7 +5,6 @@ X = 5
 num = list(range(1,26))
 delta = 1
 index = 0
-n = 0
 i, j = 0, -1
 while X > 0:
     for k in range(X):
