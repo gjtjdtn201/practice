@@ -1,53 +1,55 @@
-# 인접 행렬로 구현한 다익스트라 코드
-import sys
+import heapq
 
 
-def dijkstra(K, V, graph):
-    INF = sys.maxsize
-    # s는 해당 노드를 방문 했는지 여부를 저장하는 변수이다
-    s = [False] * V
-    # d는 memoization을 위한 array이다. d[i]는 정점 K에서 i까지 가는 최소한의 거리가 저장되어 있다.
-    d = [INF] * V
-    d[K - 1] = 0
+# 탐색할 그래프와 시작 정점을 인수로 전달받습니다.
+def dijkstra(graph, start, end) :
+    # 시작 정점에서 각 정점까지의 거리를 저장할 딕셔너리를 생성하고, 무한대(inf)로 초기화합니다.
+    distances = {vertex : [float('inf'), start] for vertex in graph}
 
-    while True:
-        m = INF
-        N = -1
+    # 그래프의 시작 정점의 거리는 0으로 초기화 해줌
+    distances[start] = [0, start]
 
-        # 방문하지 않은 노드 중 d값이 가장 작은 값을 선택해 그 노드의 번호를 N에 저장한다.
-        # 즉, 방문하지 않은 노드 중 K 정점과 가장 가까운 노드를 선택한다.
-        for j in range(V):
-            if not s[j] and m > d[j]:
-                m = d[j]
-                N = j
+    # 모든 정점이 저장될 큐를 생성합니다.
+    queue = []
 
-        # 방문하지 않은 노드 중 현재 K 정점과 가장 가까운 노드와의 거리가 INF 라는 뜻은
-        # 방문하지 않은 남아있는 모든 노드가 A에서 도달할 수 없는 노드라는 의미이므로 반복문을 빠져나간다.
-        if m == INF:
-            break
+    # 그래프의 시작 정점과 시작 정점의 거리(0)을 최소힙에 넣어줌
+    heapq.heappush(queue, [distances[start][0], start])
 
-        # N번 노드를 '방문'한다.
-        # '방문'한다는 의미는 모든 노드를 탐색하며 N번 노드를 통해서 가면 더 빨리 갈 수 있는 노드가 있는지 확인하고,
-        # 더 빨리 갈 수 있다면 해당 노드(노드의 번호 j라고 하자)의 d[j]를 업데이트 해준다.
-        s[N] = True
+    while queue :
 
-        for j in range(V):
-            if s[j]: continue
-            via = d[N] + graph[N][j]
-            if d[j] > via:
-                d[j] = via
+        # 큐에서 정점을 하나씩 꺼내 인접한 정점들의 가중치를 모두 확인하여 업데이트합니다.
+        current_distance, current_vertex = heapq.heappop(queue)
 
-    return d
+        # 더 짧은 경로가 있다면 무시한다.
+        if distances[current_vertex][0] < current_distance :
+            continue
 
-if __name__ == "__main__":
-    V, E = map(int, input().split())
-    K = int(input())
-    INF = sys.maxsize
-    graph = [[INF]*V for _ in range(V)]
+        for adjacent, weight in graph[current_vertex].items() :
+            distance = current_distance + weight
+            # 만약 시작 정점에서 인접 정점으로 바로 가는 것보다 현재 정점을 통해 가는 것이 더 가까울 경우에는
+            if distance < distances[adjacent][0] :
+                # 거리를 업데이트합니다.
+                distances[adjacent] = [distance, current_vertex]
+                heapq.heappush(queue, [distance, adjacent])
 
-    for _ in range(E):
-        u, v, w = map(int, input().split())
-        graph[u-1][v-1] = w
+    path = end
+    path_output = end + '->'
+    while distances[path][1] != start:
+        path_output += distances[path][1] + '->'
+        path = distances[path][1]
+    path_output += start
+    print(path_output)
+    return distances
 
-    for d in dijkstra(K, V, graph):
-        print(d if d != INF else "INF")
+
+# 방향 그래프
+mygraph = {
+    'A' : {'B' : 8, 'C' : 1, 'D' : 2},
+    'B' : {},
+    'C' : {'B' : 5, 'D' : 2},
+    'D' : {'E' : 3, 'F' : 5},
+    'E' : {'F' : 1},
+    'F' : {'A' : 5}
+}
+
+print(dijkstra(mygraph, 'A', 'F'))
