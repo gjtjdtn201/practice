@@ -19,4 +19,4 @@ for test_case in range(1, 11):
                         tree[j].remove(i)
 
     print('#{} '.format(test_case), end='')
-    print(*tuple(result))
+    print(*result)
