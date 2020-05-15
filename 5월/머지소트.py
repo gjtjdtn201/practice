@@ -30,9 +30,6 @@ def merge_sort(my_list):
     right = merge_sort(my_list[mid:])
     return merge(left, right)
 
-import sys
-sys.stdin = open('(5204)병합정렬_input.txt')
-
 for tc in range(1, int(input())+1):
     N = int(input())
     a = list(map(int, input().split()))
