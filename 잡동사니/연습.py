@@ -1,12 +1,24 @@
-M = int(input())
-if M == 0:
-    print(0)
-else:
-    mod = 1000000
-    N = M%(15*(10**5))
-    A = [0]*(N+1)
-    A[0], A[1] = 0, 1
-    for i in range(2, N+1):
-        A[i] = A[i-1] + A[i-2]
-        A[i] %= mod
-    print(A[N])
+import sys
+sys.stdin = open('123.txt')
+
+from collections import deque
+
+N, M = map(int, input().split())
+a = list(map(int, input().split()))
+q = deque()
+q.extend(range(1, N+1))
+cnt = 0
+for i in a:
+    for j in range(len(q)):
+        if q[j] == i:
+            break
+    if j > len(q)-j:
+        chk = 1
+        n = len(q)-j
+    else:
+        chk = 0
+        n = j
+    cnt += n
+    q.rotate(n) if chk else q.rotate(-n)
+    q.popleft()
+print(cnt)
