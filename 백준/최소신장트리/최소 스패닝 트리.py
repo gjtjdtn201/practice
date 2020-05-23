@@ -16,7 +16,6 @@ def union(a, b):
     else:
         cmp[a] = b
 
-
 V, E = map(int, input().split())
 
 result = []
