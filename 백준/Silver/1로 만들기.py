@@ -1,5 +1,5 @@
 import sys
-# sys.stdin = open('1로 만들기.txt')
+sys.stdin = open('1로 만들기.txt')
 
 A = [0, 0, 1, 1]
 N = int(input())
