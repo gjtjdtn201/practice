@@ -10,3 +10,4 @@ while stack:
     while 0 <= ny < N and 0 <= nx < M:
         ny += my
         nx += mx
+    print()
