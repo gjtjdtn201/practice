@@ -32,12 +32,14 @@ def BFS():
                             chk = 1
                             break
 
-                else:
-                    for j in range(W):
+                elif i == 3:
+                    for j in range(H):
                         my = ny + j
                         if my >= N or matrix[my][nx] == 1:
                             chk = 1
                             break
+                else:
+                    continue
                 if chk:
                     continue
                 if (ny, nx) == (edy-1, edx-1):
@@ -66,4 +68,3 @@ if (sty, stx) == (edy, edx):
     print(0)
 else:
     BFS()
-    
