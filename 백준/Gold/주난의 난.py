@@ -60,4 +60,5 @@ if (sty, stx) == (edy, edx):
     print(0)
 else:
     solution()
+
     
