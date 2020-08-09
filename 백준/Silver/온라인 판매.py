@@ -16,3 +16,4 @@ for i in range(1, M+1):
         cnt2 = cus[i-1]
 
 print(cnt2, cnt)
+
