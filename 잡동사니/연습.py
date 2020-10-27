@@ -1,24 +1,27 @@
 import sys
 sys.stdin = open('123.txt')
 
-from collections import deque
+N, C = map(int, input().split())
 
-N, M = map(int, input().split())
-a = list(map(int, input().split()))
-q = deque()
-q.extend(range(1, N+1))
-cnt = 0
-for i in a:
-    for j in range(len(q)):
-        if q[j] == i:
-            break
-    if j > len(q)-j:
-        chk = 1
-        n = len(q)-j
+house = []
+for i in range(N):
+    house.append(int(input()))
+house.sort()
+print(house)
+start, end = house[1] - house[0], house[-1] - house[0]
+ans = 0
+
+while start <= end:
+    mid = (start + end) // 2
+    cur_house = house[0]
+    count = 1
+    for i in range(1, N):
+        if house[i] >= cur_house + mid:
+            count += 1
+            cur_house = house[i]
+    if count >= C:
+        start = mid + 1
+        ans = mid
     else:
-        chk = 0
-        n = j
-    cnt += n
-    q.rotate(n) if chk else q.rotate(-n)
-    q.popleft()
-print(cnt)
+        end = mid - 1
+print(ans)
