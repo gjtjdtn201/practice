@@ -1,27 +1,27 @@
-from collections import deque
+import sys
+sys.stdin = open('123.txt')
 
-v = [[0,0,1],[2,2,1],[0,0,0]]
-answer = [0, 0, 0]
-visit = [[0] * len(v) for _ in range(len(v))]
+N, C = map(int, input().split())
 
-dy = [1, -1, 0, 0]
-dx = [0, 0, 1, -1]
+house = []
+for i in range(N):
+    house.append(int(input()))
+house.sort()
+print(house)
+start, end = house[1] - house[0], house[-1] - house[0]
+ans = 0
 
-N = len(v)
-for y in range(N):
-    for x in range(N):
-        if visit[y][x] == 0:
-            q = deque()
-            color = v[y][x]
-            visit[y][x] = 1
-            q.append((y, x))
-            while q:
-                a, b = q.pop()
-                for i in range(4):
-                    ny = a + dy[i]
-                    nx = b + dx[i]
-                    if 0 <= ny < N and 0 <= nx < N and v[ny][nx] == color and visit[ny][nx] == 0:
-                        q.append((ny, nx))
-                        visit[ny][nx] = 1
-            answer[color] += 1
-print(answer)
+while start <= end:
+    mid = (start + end) // 2
+    cur_house = house[0]
+    count = 1
+    for i in range(1, N):
+        if house[i] >= cur_house + mid:
+            count += 1
+            cur_house = house[i]
+    if count >= C:
+        start = mid + 1
+        ans = mid
+    else:
+        end = mid - 1
+print(ans)
